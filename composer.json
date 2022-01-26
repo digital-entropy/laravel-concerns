@@ -3,6 +3,20 @@
   "description": "Set of useful traits for Laravel and Lumen",
   "keywords": [ "laravel", "lumen"],
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Dentro Dev",
+      "email": "dev@digitalentropy.co.id"
+    }
+  ],
+  "require": {
+    "illuminate/contracts": ">= 7.0",
+    "illuminate/support": ">= 7.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "phpunit/phpunit": ">=8.5"
+  },
   "autoload": {
     "psr-4": {
       "Dentro\\Concerns\\": "src/"
@@ -13,18 +27,6 @@
       "Tests\\": "tests"
     }
   },
-  "authors": [
-    {
-      "name": "Dentro Dev",
-      "email": "dev@digitalentropy.co.id"
-    }
-  ],
   "minimum-stability": "dev",
-  "require": {
-    "illuminate/support": ">= 7.*"
-  },
-  "require-dev": {
-    "roave/security-advisories": "dev-latest",
-    "phpunit/phpunit": ">=8.5"
-  }
+  "prefer-stable": true
 }
