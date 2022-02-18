@@ -7,14 +7,18 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class FluentJson implements CastsAttributes
 {
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \JsonException
+     */
     public function get($model, string $key, $value, array $attributes)
     {
-        $json = json_decode($value, true);
+        $array = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
 
-        return is_null($json)
+        return is_null($array)
             ? new Fluent()
-            : new Fluent($json);
+            : new Fluent($array);
     }
 
     /** {@inheritdoc} */
@@ -25,7 +29,7 @@ class FluentJson implements CastsAttributes
         }
 
         $n = new Fluent();
-        if (is_array($value) && false === $value instanceof Fluent) {
+        if (is_array($value)) {
             $n = new Fluent($value);
         }
 
