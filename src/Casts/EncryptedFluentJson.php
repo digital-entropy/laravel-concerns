@@ -2,6 +2,7 @@
 
 namespace Dentro\Concerns\Casts;
 
+use Exception;
 use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -29,16 +30,33 @@ class EncryptedFluentJson implements CastsAttributes
     /** {@inheritdoc} */
     public function get($model, string $key, $value, array $attributes)
     {
-        // suppress exception and try without decrypting the value.
+        if (empty($value))
+            return new Fluent();
+
         try {
             $json = json_decode($this->encrypter->decrypt($value), true, 512, JSON_THROW_ON_ERROR);
         } catch (DecryptException $e) {
-            $json = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+            $json = $this->attemptToDecode($value);
         }
 
-        return is_null($json)
-            ? new Fluent()
-            : new Fluent($json);
+        return new Fluent($json);
+    }
+
+    /**
+     * attempt to decode normally.
+     *
+     * @param string $value
+     * @return string|null
+     */
+    private function attemptToDecode(string $value): ?string
+    {
+        try {
+            $json = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+        } catch (Exception $e) {
+            $json = null;
+        }
+
+        return $json;
     }
 
     /** {@inheritdoc} */
