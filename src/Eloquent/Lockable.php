@@ -8,6 +8,7 @@ trait Lockable
      * Reload a fresh model instance from the database with pessimistic lock enabled.
      *
      * @param array|string $with
+     *
      * @return mixed
      */
     public function freshLock(array|string $with = []): mixed
