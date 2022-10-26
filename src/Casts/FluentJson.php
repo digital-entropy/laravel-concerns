@@ -15,7 +15,7 @@ class FluentJson implements CastsAttributes
     public function get($model, string $key, $value, array $attributes)
     {
         if (empty($array)) {
-            new Fluent();
+            return new Fluent();
         }
 
         $array = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
