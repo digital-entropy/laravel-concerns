@@ -14,11 +14,13 @@ class FluentJson implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
+        if (empty($array)) {
+            new Fluent();
+        }
+
         $array = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
 
-        return is_null($array)
-            ? new Fluent()
-            : new Fluent($array);
+        return new Fluent($array);
     }
 
     /** {@inheritdoc} */
